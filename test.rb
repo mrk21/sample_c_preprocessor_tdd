@@ -16,9 +16,9 @@ class TestPreprocessor < MiniTest::Test
     CPP
   end
   
-  def test_VARIABLE_LIST
-    assert_equal cxxpp(<<-CPP), 'int a = 0; int b = 1; int c = 2;'
-      VARIABLE_LIST(a,b,c)
+  def test_INITIALIZER_LIST
+    assert_equal cxxpp(<<-CPP), '{ {type::a, "a"}, {type::b, "b"}, {type::c, "c"} }'
+      INITIALIZER_LIST(a,b,c)
     CPP
   end
 end

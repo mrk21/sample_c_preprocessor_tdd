@@ -1,6 +1,11 @@
 CXX = ENV['CXX'] || 'g++'
-CXXFLAGS = [ENV['CXXFLAGS'], '-Wno-invalid-pp-token -E -P -x c++'].compact.join(' ')
 
-task :default do
-  sh "#{CXX} #{CXXFLAGS} test.rb | ruby - -v"
+task :default => :test
+
+task :test do
+  sh "#{CXX} -std=gnu++11 -E -P -Wno-invalid-pp-token -x c++ test.rb | ruby - -v"
+end
+
+task :main do
+  sh "#{CXX} -std=gnu++11 main.cpp && ./a.out"
 end

@@ -6,19 +6,21 @@ class TestPreprocessor < MiniTest::Test
     #include "preprocessor.hpp"
   CPP
   
-  def cxxpp(cpp_code)
+  def format(cpp_code)
     cpp_code.gsub(/^\s+/,'').gsub(/\s+$/,'').gsub(/\s+/,' ').strip
   end
   
-  def test_HOGE
-    assert_equal cxxpp(<<-CPP), 'hoge'
-      HOGE
-    CPP
-  end
-  
-  def test_INITIALIZER_LIST
-    assert_equal cxxpp(<<-CPP), '{ {type::a, "a"}, {type::b, "b"}, {type::c, "c"} }'
-      INITIALIZER_LIST(a,b,c)
-    CPP
+  def test_STRINGIFIABLE_ENUM_NAME_LIST
+    assert_equal format(<<-SUBJECT_CPP), format(<<-EXPECTED_CPP)
+      STRINGIFIABLE_ENUM_NAME_LIST(my_enum,
+        a,
+        b,
+        c
+      )
+    SUBJECT_CPP
+      {my_enum::a, "a"},
+      {my_enum::b, "b"},
+      {my_enum::c, "c"}
+    EXPECTED_CPP
   end
 end

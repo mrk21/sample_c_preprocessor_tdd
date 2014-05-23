@@ -2,7 +2,7 @@
 #include <boost/preprocessor.hpp>
 
 #define STRINGIFIABLE_ENUM(type, ...) \
-    enum class type: uint8_t { \
+    enum class type { \
         __VA_ARGS__ \
     }; \
     std::ostream & operator <<(std::ostream & out, type value) { \
@@ -13,13 +13,11 @@
     }
 
 #define STRINGIFIABLE_ENUM_NAME_LIST(type, ...) \
-    BOOST_PP_SEQ_ENUM( \
-        BOOST_PP_REPEAT( \
-            BOOST_PP_VARIADIC_SIZE(__VA_ARGS__), \
-            STRINGIFIABLE_ENUM_NAME_LIST_ELEM, \
-            (type, (__VA_ARGS__)) \
-        ) \
-    )
+    BOOST_PP_REPEAT( \
+        BOOST_PP_VARIADIC_SIZE(__VA_ARGS__), \
+        STRINGIFIABLE_ENUM_NAME_LIST_ELEM, \
+        (type, (__VA_ARGS__)) \
+    ) \
 
 #define STRINGIFIABLE_ENUM_NAME_LIST_ELEM(unused, i, tuple) \
     STRINGIFIABLE_ENUM_NAME_LIST_ELEM_IMPL( \
@@ -28,4 +26,4 @@
     )
 
 #define STRINGIFIABLE_ENUM_NAME_LIST_ELEM_IMPL(type, value) \
-    ({type::value) (BOOST_PP_STRINGIZE(value)})
+    {type::value, BOOST_PP_STRINGIZE(value)},

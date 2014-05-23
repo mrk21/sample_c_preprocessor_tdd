@@ -20,7 +20,7 @@ class TestPreprocessor < MiniTest::Test
     SUBJECT_CPP
       {my_enum::a, "a"},
       {my_enum::b, "b"},
-      {my_enum::c, "c"}
+      {my_enum::c, "c"},
     EXPECTED_CPP
   end
 end
